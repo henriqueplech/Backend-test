@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuários</title>
+    <style>
+        /* Estilos CSS simples para melhorar a aparência */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cadastro de Usuários</h1>
+    </header>
+    <div class="container">
+        <form id="cadastro-form">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <h2>Lista de Usuários</h2>
+        <ul id="lista-usuarios">
+            <!-- Os usuários serão adicionados aqui -->
+        </ul>
+    </div>
+
+    <script>
+        const form = document.getElementById("cadastro-form");
+        const listaUsuarios = document.getElementById("lista-usuarios");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+
+            // Validação de e-mail simples
+            if (!isValidEmail(email)) {
+                alert("Por favor, insira um endereço de e-mail válido.");
+                return;
+            }
+
+            // Crie um elemento de lista e adicione-o à lista de usuários
+            const li = document.createElement("li");
+            li.innerHTML = `<strong>Nome:</strong> ${nome}, <strong>E-mail:</strong> ${email}
+                            <button class="excluir">Excluir</button>`;
+            listaUsuarios.appendChild(li);
+
+            // Adicione um evento de clique ao botão de exclusão
+            const btnExcluir = li.querySelector(".excluir");
+            btnExcluir.addEventListener("click", function () {
+                listaUsuarios.removeChild(li);
+            });
+
+            // Limpe o formulário
+            form.reset();
+        });
+
+        // Função de validação de e-mail simples
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>
